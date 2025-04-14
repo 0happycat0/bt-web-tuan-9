@@ -57,3 +57,15 @@ exports.deleteStudent = async (req, res) =>{
         res.status(500).json({error: `id sinh viên không hợp lệ`});
     }
 };
+exports.searchStudentByNameOrAddress = async (req, res) =>{
+    try{
+        const searchKey = req.query.name || req.query.address || "";
+        const student = req.query.name ?
+            await studentService.searchStudentByName(searchKey)
+          : await studentService.searchStudentByAddress(searchKey);
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.json({data: student, status: "success"});
+    }catch(err){
+        res.status(500).json({error: err.message});
+    }
+};

@@ -19,4 +19,16 @@ exports.updateStudent = async (id, student) => {
 
 exports.deleteStudent = async (id) => {
     return await StudentModel.findByIdAndDelete(id);
-}
+};
+
+exports.searchStudentByName = async (nameSearch) => {
+    return await StudentModel.find({
+      name: { $regex: nameSearch, $options: "i" },
+    });
+};
+
+exports.searchStudentByAddress = async (addressSearch) => {
+    return await StudentModel.find({
+      address: { $regex: addressSearch, $options: "i" },
+    });
+};
